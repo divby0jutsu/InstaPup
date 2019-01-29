@@ -1,0 +1,17 @@
+{
+  "name": "instapup",
+  "version": "1.0.0",
+  "description": "instalike",
+  "main": "example.js",
+  "dependencies": {
+    "cron": "^1.6.0",
+    "jsonfile": "^5.0.0",
+    "puppeteer": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -97,7 +97,7 @@ async function exploreAndLike() {
       
       const next = await this.page.$('.coreSpriteRightPaginationArrow')
       if (heart && await testAvoidtags()) {
-        await this.page.click('.coreSpriteHeartOpen');
+        await this.page.click('span[aria-label="Like"].glyphsSpriteHeart__outline__24__grey_9');
         n++;
         const userliked = await this.page.evaluate(()=> document.querySelector('.FPmhX').innerText);
         console.log(userliked + ' like');

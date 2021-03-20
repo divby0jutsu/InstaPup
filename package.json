@@ -5,13 +5,22 @@
   "main": "example.js",
   "dependencies": {
     "cron": "^1.6.0",
+    "fs-extra": "^9.1.0",
     "jsonfile": "^5.0.0",
-    "puppeteer": "^1.11.0"
+    "puppeteer": "^8.0.0"
   },
-  "devDependencies": {},
   "scripts": {
+    "start": "node instapup.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/divby0jutsu/InstaPup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/divby0jutsu/InstaPup/issues"
+  },
+  "homepage": "https://github.com/divby0jutsu/InstaPup#readme"
 }

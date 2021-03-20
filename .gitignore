@@ -1,2 +1,6 @@
 /node_modules
 usercred.js
+.DS_Store
+.gitignore
+package-lock.json
+usercookies.json

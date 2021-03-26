@@ -16,6 +16,7 @@ async function initBrowser() {
 }
 
 async function userCookies() {
+  let cookiesArr = "";
   fs.ensureFile(cookiesFilePath)
     .then(() => {
       console.log("success!");
@@ -24,8 +25,18 @@ async function userCookies() {
       console.error(err);
     });
 
-  const cookiesArr = require(cookiesFilePath);
-  if (cookiesArr.length !== 0) {
+  fs.readFile("./usercookies.json", "utf8", (err, jsonString) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+
+    cookiesArr = jsonString;
+    console.log("File data:", jsonString);
+  });
+
+  // const cookiesArr = require(cookiesFilePath);
+  if (cookiesArr) {
     for (let cookie of cookiesArr) {
       await this.page.setCookie(cookie);
     }
@@ -50,7 +61,7 @@ async function userCookies() {
     } else {
       throw new error("Button not found");
     }
-    var cookies = await page.cookies();
+    let cookies = await page.cookies();
     jsonfile.writeFile(
       "./usercookies.json",
       cookies,
@@ -91,7 +102,7 @@ async function exploreAndLike() {
       "/"
   );
   //waiting for main content to load
-  await this.page.waitFor("article");
+  await this.page.waitForSelector("article");
   //searching for the first post in the Most Recent section
   const firstPost = await this.page.$("h2:nth-child(2)+div div:nth-child(2)");
   // opening first post
@@ -103,24 +114,20 @@ async function exploreAndLike() {
   // if it's already liked or it has tags that are added as an exception to the config file script navigates to the next post
   // if not script likes the post and then navigates to the next post
   for (let i = 0; i < 100; i++) {
-    await this.page.waitFor(2500 + Math.floor(Math.random() * 5000));
+    await this.page.waitForTimeout(2500 + Math.floor(Math.random() * 5000));
     console.log(i);
     //const heart = await page.$('span[aria-label="Like"]');
-    const heart = await this.page.$(
-      'span[aria-label="Like"].glyphsSpriteHeart__outline__24__grey_9'
-    );
+    const heart = await this.page.$('svg[aria-label="Like"][width="24"]');
 
     const next = await this.page.$(".coreSpriteRightPaginationArrow");
     if (heart && (await testAvoidtags())) {
-      await this.page.click(
-        'span[aria-label="Like"].glyphsSpriteHeart__outline__24__grey_9'
-      );
+      await this.page.click('svg[aria-label="Like"][width="24"]');
       n++;
-      const userliked = await this.page.evaluate(
-        () => document.querySelector(".FPmhX").innerText
+      const userLiked = await this.page.evaluate(
+        () => document.querySelector("header a").innerText
       );
-      console.log(userliked + " like");
-      await this.page.waitFor(2500 + Math.floor(Math.random() * 5000));
+      console.log(userLiked + " like");
+      await this.page.waitForTimeout(2500 + Math.floor(Math.random() * 5000));
       await next.click();
     } else {
       console.log("next");
@@ -148,7 +155,7 @@ async function instaPup() {
     "Script ran for " + Math.floor((endTime - startTime) / 1000) + " s."
   );
 
-  await this.page.waitFor(4000);
+  await this.page.waitForTimeout(4000);
   await browser.close();
 }
 
